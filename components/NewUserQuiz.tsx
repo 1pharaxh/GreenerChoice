@@ -21,6 +21,7 @@ import {
   DialogFooter,
   DialogClose,
 } from "./ui/dialog";
+import { Slider } from "./ui/slider";
 
 export default function NewUserQuiz() {
   const [showDialog, setShowDialog] = useState(false);
@@ -63,6 +64,10 @@ export default function NewUserQuiz() {
             <div className="flex flex-col space-y-1.5">
               <Label htmlFor="name">Weight</Label>
               <Input id="name" placeholder="Dont be fat" />
+            </div>
+            <div className="flex flex-col space-y-3.5">
+              <Label htmlFor="name">Activity Level</Label>
+              <Slider defaultValue={[0]} max={5} step={1} />
             </div>
 
             <div className="flex flex-col space-y-1.5">
