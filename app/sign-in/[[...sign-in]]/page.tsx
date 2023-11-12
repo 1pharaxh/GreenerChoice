@@ -23,11 +23,11 @@ export default function Page() {
         <div className="relative z-20 mt-auto">
           <blockquote className="space-y-2">
             <p className="text-lg">
-              &ldquo; This goofy aah app is the best thing since sliced bread,
-              it is the top of the line, the cream of the crop, the best of the
-              best, the best thing since sliced bread. &rdquo;
+              &ldquo; Sustainable development is the development that meets the
+              needs of the present without compromising the ability of future
+              generations to meet their own needs. &rdquo;
             </p>
-            <footer className="text-sm">Rosa Parks</footer>
+            <footer className="text-sm">Gro Harlem Brundtland</footer>
           </blockquote>
         </div>
       </div>
@@ -35,7 +35,10 @@ export default function Page() {
         <div className="mx-auto flex w-full flex-col justify-center space-y-6 sm:w-[350px]">
           <SignIn
             appearance={{
-              elements: { formButtonPrimary: "bg-green-600 hover:bg-green-500", footerActionLink: "text-green-600 hover-green-700"},
+              elements: {
+                formButtonPrimary: "bg-green-600 hover:bg-green-500",
+                footerActionLink: "text-green-600 hover-green-700",
+              },
             }}
           />
         </div>
