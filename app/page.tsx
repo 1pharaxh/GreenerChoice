@@ -23,10 +23,11 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
-import { InfoCircledIcon } from "@radix-ui/react-icons";
+import { InfoCircledIcon, PlusIcon } from "@radix-ui/react-icons";
 import { TooltipArrow } from "@radix-ui/react-tooltip";
 import { BigPieChart } from "@/components/BigPieChart";
 import { AnalyticsTable } from "@/components/analyticstable";
+import { Button } from "@/components/ui/button";
 
 export default function Home() {
   const { isLoaded, userId } = useAuth();
@@ -41,6 +42,11 @@ export default function Home() {
     }
   };
 
+  const handleImageUpload = async (event: any) => {
+    const file = event.target.files[0];
+    const formData = new FormData();
+    formData.append("file", file);
+  };
   useEffect(() => {
     fetchData();
   }, [isLoaded, userId, isSignedIn]);
@@ -50,6 +56,13 @@ export default function Home() {
       {!loading && (
         <main className="flex min-h-screen w-full flex-col items-center justify-between ">
           <NewUserQuiz />
+          <input
+            type="file"
+            id="file-input"
+            style={{ display: "none" }}
+            onChange={handleImageUpload}
+            accept="image/*"
+          />
 
           <>
             <div className=" flex-col flex w-full max-w-7xl">
@@ -62,12 +75,26 @@ export default function Home() {
                       Hello, {user?.firstName} welcome to Greener Choice
                     </span>
                   </h2>
-
-                  {/* <h2 className="text-sm font-medium tracking-tight">
-                  Hello, {userId} your current active session is {sessionId}
-                </h2> */}
-                  <div className="flex items-center space-x-2">
+                  <div className="flex items-end space-y-2 flex-col ">
                     <UserButton afterSignOutUrl="/" />
+
+                    <Button
+                      onClick={
+                        // want to upload image to cloudinary
+                        // then send url to backend
+                        () => {
+                          const fileInput = document.getElementById(
+                            "file-input"
+                          ) as HTMLInputElement;
+                          fileInput.click();
+                        }
+                      }
+                      variant={"notification"}
+                      className="flex items-center justify-center gap-1"
+                    >
+                      Upload
+                      <PlusIcon className="h-5 w-5 text-green-600" />
+                    </Button>
                   </div>
                 </div>
                 <Tabs defaultValue="overview" className="space-y-4">

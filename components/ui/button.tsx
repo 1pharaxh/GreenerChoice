@@ -9,6 +9,10 @@ const buttonVariants = cva(
   {
     variants: {
       variant: {
+        // make a variant that is called notification that has a red dot on the top right corner
+        notification:
+          "border relative  border-input bg-transparent border-green-600 text-green-600 shadow-sm hover:bg-accent hover:text-green-700",
+
         success:
           "border border-input bg-transparent border-green-600 text-green-600 shadow-sm hover:bg-accent hover:text-green-700",
         default:
@@ -50,7 +54,15 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
         className={cn(buttonVariants({ variant, size, className }))}
         ref={ref}
         {...props}
-      />
+      >
+        {variant === "notification" && (
+          <span className="absolute flex -top-[4px] -right-[2px]">
+            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-red-600 opacity-75"></span>
+            <span className="relative inline-flex rounded-full h-3 w-3 bg-red-600"></span>
+          </span>
+        )}
+        {props.children}
+      </Comp>
     );
   }
 );

@@ -21,10 +21,11 @@ export function BigPieChart({ loading }: { loading: boolean }) {
   // check if user is on phone or computer if he is then set a state variable to true
   const [onMobile, setOnMobile] = useState(false);
   useEffect(() => {
-    if (window.innerWidth < 512) {
+    // Check if window is defined (i.e., we're on the client-side)
+    if (typeof window !== "undefined" && window.innerWidth < 512) {
       setOnMobile(true);
     }
-  }, [window.innerWidth]);
+  }, [typeof window !== "undefined" ? window.innerWidth : undefined]);
   return (
     <>
       <ResponsiveContainer width="100%" height={350}>
