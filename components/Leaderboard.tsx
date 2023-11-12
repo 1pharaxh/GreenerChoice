@@ -21,12 +21,12 @@ export function Leaderboard() {
           borderRadius: "10px",
         }}
       >
-        <CardHeader>
           <CardTitle
             style={{
               textAlign: "center",
               fontSize: "20px",
               marginBottom: "20px",
+              marginTop: '20px',
             }}
           >
             Leaderboard
@@ -37,6 +37,8 @@ export function Leaderboard() {
                 display: "flex",
                 justifyContent: "center",
                 borderRadius: "10px",
+                marginLeft: '10px',
+                marginRight: '10px',
               }}
             >
               <TabsTrigger
@@ -58,30 +60,43 @@ export function Leaderboard() {
                 Last 30 days
               </TabsTrigger>
             </TabsList>
+            <TabsContent value="all time">
+                <Card>
+                    <Table>
+                        <TableHeader>
+                            <TableHead>
+                                Rank
+                            </TableHead>
+                            <TableHead>
+                                Name
+                            </TableHead>
+                            <TableHead>
+                                Score
+                            </TableHead>
+                        </TableHeader>
+                        <TableBody>
+                            <TableRow>
+                                <TableCell>
+                                    Test
+                                </TableCell>
+                                <TableCell>
+                                    Test
+                                </TableCell>
+                                <TableCell>
+                                    Test
+                                </TableCell>
+                            </TableRow>
+                        </TableBody>
+                    </Table>
+                </Card>
+            </TabsContent>
+            <TabsContent value="7 days">
+
+            </TabsContent>
+            <TabsContent value="30 days">
+
+            </TabsContent>
           </Tabs>
-        </CardHeader>
-        <CardContent>
-            <Table>
-                <TableHeader style={{ display: 'flex'}}>
-                    <TableHead style= {{ flex: 1 }}>Rank</TableHead>
-                    <TableHead style= {{ flex: 1 }}>Name</TableHead>
-                    <TableHead style= {{ flex: 1 }}>Score</TableHead>
-                </TableHeader>
-                <TableBody>
-                    <TableRow>
-                        <TableCell>
-                            1
-                        </TableCell>
-                        <TableCell>
-                            John Doe
-                        </TableCell>
-                        <TableCell>
-                            298782
-                        </TableCell>
-                    </TableRow>
-                </TableBody>
-            </Table>
-        </CardContent>
       </Card>
     </>
   );

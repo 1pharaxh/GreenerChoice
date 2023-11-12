@@ -23,6 +23,7 @@ import { Button } from "@/components/ui/button";
 import ExpandedDashBoardCard from "@/components/ExpandedDashBoardCard";
 import { RecipeChart } from "@/components/RecipeChart";
 import { RecipeTable } from "@/components/RecipeTable";
+import { Leaderboard } from "@/components/Leaderboard";
 
 export default function Home() {
   const { isLoaded, userId } = useAuth();
@@ -117,7 +118,7 @@ export default function Home() {
                   <TabsList>
                     <TabsTrigger value="overview">Overview</TabsTrigger>
                     <TabsTrigger value="recipes">Recipes</TabsTrigger>
-                    <TabsTrigger value="suggestions">Suggestions</TabsTrigger>
+                    <TabsTrigger value="leaderboard">Leaderboard</TabsTrigger>
                   </TabsList>
                   <TabsContent value="overview" className="space-y-4">
                     <div className="grid gap-4 lg:grid-cols-2">
@@ -157,6 +158,10 @@ export default function Home() {
                     <div className="grid gap-4 lg:grid-cols-2">
                       <RecipeTable />
                     </div>
+                  </TabsContent>
+
+                  <TabsContent value="leaderboard">
+                    <Leaderboard />
                   </TabsContent>
                 </Tabs>
               </div>
