@@ -25,7 +25,7 @@ import {
 } from "@/components/ui/tooltip";
 import { InfoCircledIcon } from "@radix-ui/react-icons";
 import { TooltipArrow } from "@radix-ui/react-tooltip";
-import { BigChart } from "@/components/BigChart";
+import { BigPieChart } from "@/components/BigPieChart";
 
 export default function Home() {
   const { isLoaded, userId } = useAuth();
@@ -120,7 +120,7 @@ export default function Home() {
                         </CardHeader>
                         <CardContent className="pl-2">
                           {userId && (
-                            <BigChart loading={productivityScore === 20} />
+                            <BigPieChart loading={productivityScore === 20} />
                           )}
                         </CardContent>
                       </Card>

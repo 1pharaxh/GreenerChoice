@@ -1,6 +1,13 @@
 import { LockClosedIcon } from "@radix-ui/react-icons";
 import { useEffect, useState } from "react";
-import { Line, LineChart, ResponsiveContainer, Tooltip } from "recharts";
+import {
+  Area,
+  AreaChart,
+  Line,
+  LineChart,
+  ResponsiveContainer,
+  Tooltip,
+} from "recharts";
 
 interface Data {
   productivityScore: number;
@@ -29,17 +36,19 @@ const demoData: Data[] = [
 export function TinyLineChart({
   userId,
   loading,
+  className,
 }: {
   userId?: any;
   loading: number;
+  className?: string;
 }) {
   const data = demoData;
 
   return (
-    <div className="h-[80px]">
+    <div className={"h-[170px] " + className}>
       {data.length > 1 && loading !== 0 && (
         <ResponsiveContainer width="100%" height="100%">
-          <LineChart
+          <AreaChart
             data={data}
             margin={{
               top: 5,
@@ -48,23 +57,19 @@ export function TinyLineChart({
               bottom: 0,
             }}
           >
-            <Line
+            <Area
               type="monotone"
+              stroke="#16a34a"
+              fill="#16a34a"
               strokeWidth={2}
               dataKey="productivityScore"
               activeDot={{
                 r: 6,
                 style: {
-                  fill: "var(--theme-primary)",
+                  fill: "#16a34a",
                   opacity: 0.25,
                 },
               }}
-              style={
-                {
-                  stroke: "var(--theme-primary)",
-                  "--theme-primary": "#adfa1d",
-                } as React.CSSProperties
-              }
             />
             <Tooltip
               cursor={{ fill: "transparent" }}
@@ -81,7 +86,7 @@ export function TinyLineChart({
               formatter={(value) => [`${value}`, "Points"]}
               labelFormatter={(label) => ``}
             />
-          </LineChart>
+          </AreaChart>
         </ResponsiveContainer>
       )}
       {data.length < 1 && loading !== 0 && (
@@ -95,8 +100,8 @@ export function TinyLineChart({
 
           <div className=" h-full blur-[3px] bg-slate-50 rounded-xl">
             <ResponsiveContainer width="100%" height="100%">
-              <LineChart
-                data={demoData}
+              <AreaChart
+                data={data}
                 margin={{
                   top: 5,
                   right: 10,
@@ -104,23 +109,19 @@ export function TinyLineChart({
                   bottom: 0,
                 }}
               >
-                <Line
+                <Area
                   type="monotone"
+                  stroke="#16a34a"
+                  fill="#16a34a"
                   strokeWidth={2}
                   dataKey="productivityScore"
                   activeDot={{
                     r: 6,
                     style: {
-                      fill: "var(--theme-primary)",
+                      fill: "#16a34a",
                       opacity: 0.25,
                     },
                   }}
-                  style={
-                    {
-                      stroke: "var(--theme-primary)",
-                      "--theme-primary": "#adfa1d",
-                    } as React.CSSProperties
-                  }
                 />
                 <Tooltip
                   cursor={{ fill: "transparent" }}
@@ -137,14 +138,14 @@ export function TinyLineChart({
                   formatter={(value) => [`${value}`, "Points"]}
                   labelFormatter={(label) => ``}
                 />
-              </LineChart>
+              </AreaChart>
             </ResponsiveContainer>
           </div>
         </div>
       )}
       {loading === 0 && (
         <div className="h-[80px] w-full flex items-center justify-center">
-          <div className="animate-spin rounded-full h-10 w-10 border-t-5 border-b-2 border-[#adfa1d]"></div>
+          <div className="animate-spin rounded-full h-10 w-10 border-t-5 border-b-2 border-[#16a34a]"></div>
         </div>
       )}
     </div>

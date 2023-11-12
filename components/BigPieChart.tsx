@@ -17,7 +17,7 @@ const data = [
 ];
 const COLORS = ["#0088FE", "#00C49F", "#FFBB28", "#FF8042"];
 
-export function BigChart({ loading }: { loading: boolean }) {
+export function BigPieChart({ loading }: { loading: boolean }) {
   // check if user is on phone or computer if he is then set a state variable to true
   const [onMobile, setOnMobile] = useState(false);
   useEffect(() => {

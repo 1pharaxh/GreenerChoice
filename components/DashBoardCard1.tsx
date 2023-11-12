@@ -55,7 +55,11 @@ export default function DashBoardCard1({
             </div>
           )}
         </div>
-        <TinyLineChart loading={productivityScore} userId={userId} />
+        <TinyLineChart
+          className="mt-4"
+          loading={productivityScore}
+          userId={userId}
+        />
       </CardContent>
     </Card>
   );

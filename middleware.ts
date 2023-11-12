@@ -7,9 +7,5 @@ import { authMiddleware } from "@clerk/nextjs";
 // IMPORTANT: This middleware must be configured for all routes that you want to protect OR make public.
 export default authMiddleware({
   publicRoutes: ["/api/testApi"],
-  ignoredRoutes: ["/((?!api|trpc))(_next|.+..+)(.*)", "/api/testApi"],
+  ignoredRoutes: ["/((?!api|trpc))(_next|.+..+)(.*)", "/api/testApi", "/"],
 });
-
-export const config = {
-  matcher: ["/((?!.+\\.[\\w]+$|_next).*)", "/", "/(api|trpc)(.*)"],
-};
