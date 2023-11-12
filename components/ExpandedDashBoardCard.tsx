@@ -20,8 +20,10 @@ import { BigPieChart } from "./BigPieChart";
 export default function ExpandedDashBoardCard({
   loading,
   userId,
+  data,
 }: {
   loading: boolean;
+  data: any;
   userId: string | null | undefined;
 }) {
   return (
@@ -63,7 +65,7 @@ export default function ExpandedDashBoardCard({
         </div>
       </CardHeader>
       <CardContent className="pl-2">
-        {userId && <BigPieChart loading={loading} />}
+        {data && <BigPieChart data={data} loading={loading} />}
       </CardContent>
     </Card>
   );

@@ -9,23 +9,15 @@ import {
   Legend,
 } from "recharts";
 
-const data = [
-  { name: "Group A", value: 400 },
-  { name: "Group B", value: 300 },
-  { name: "Group C", value: 300 },
-  { name: "Group D", value: 200 },
-];
-const COLORS = ["#0088FE", "#00C49F", "#FFBB28", "#FF8042"];
+const COLORS = ["#16a34a", "#b45309", "#FFBB28", "#FF8042"];
 
-export function BigPieChart({ loading }: { loading: boolean }) {
-  // check if user is on phone or computer if he is then set a state variable to true
-  const [onMobile, setOnMobile] = useState(false);
-  useEffect(() => {
-    // Check if window is defined (i.e., we're on the client-side)
-    if (typeof window !== "undefined" && window.innerWidth < 512) {
-      setOnMobile(true);
-    }
-  }, [typeof window !== "undefined" ? window.innerWidth : undefined]);
+export function BigPieChart({
+  loading,
+  data,
+}: {
+  loading: boolean;
+  data: any;
+}) {
   return (
     <>
       {!loading && (
@@ -38,21 +30,16 @@ export function BigPieChart({ loading }: { loading: boolean }) {
               fill="#8884d8"
               paddingAngle={2}
               dataKey="value"
-              label={
-                onMobile
-                  ? false
-                  : ({ name, percent }) =>
-                      `${name} ${(percent * 100).toFixed(0)}%`
-              }
             >
-              {data.map((entry, index) => (
-                <Cell
-                  key={`cell-${index}`}
-                  fill={COLORS[index % COLORS.length]}
-                />
-              ))}
+              {data &&
+                data.map((entry: any, index: any) => (
+                  <Cell
+                    key={`cell-${index}`}
+                    fill={COLORS[index % COLORS.length]}
+                  />
+                ))}
             </Pie>
-            {onMobile && <Legend />}
+            <Legend />
           </PieChart>
         </ResponsiveContainer>
       )}

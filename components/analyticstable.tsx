@@ -40,150 +40,21 @@ import {
   TableRow,
 } from "@/components/ui/table";
 
-const data: Payment[] = [
-  {
-    id: "m5gr84i9",
-
-    pageurl: "https://www.google.com",
-    pagetitle: "Google",
-    allowed: "Yes",
-    category: "Others",
-    date: "2021-09-01",
-  },
-  {
-    id: "3u1reuv4",
-    amount: 242,
-    status: "success",
-    email: "Abe45@gmail.com",
-
-    pageurl: "https://www.acme.com",
-    pagetitle: "Your daily politics | Acme",
-    allowed: "No",
-    category: "Politics",
-    date: "2021-09-01",
-  },
-  {
-    id: "derv1ws0",
-    amount: 837,
-    status: "processing",
-    email: "Monserrat44@gmail.com",
-
-    pageurl: "https://www.acme.com",
-    pagetitle: "Your daily politics | Acme",
-    allowed: "No",
-    category: "Politics",
-    date: "2021-09-01",
-  },
-  {
-    id: "5kma53ae",
-    amount: 874,
-    status: "success",
-    email: "Silas22@gmail.com",
-
-    pageurl: "https://www.acme.com",
-    pagetitle: "Your daily politics | Acme",
-    allowed: "No",
-    category: "Politics",
-    date: "2021-09-01",
-  },
-  {
-    id: "bhqecj4p",
-    amount: 721,
-    status: "failed",
-    email: "carmella@hotmail.com",
-
-    pageurl: "https://www.acme.com",
-    pagetitle: "Your daily politics | Acme",
-    allowed: "No",
-    category: "Politics",
-    date: "2021-09-01",
-  },
-  {
-    id: "bhqecjd4p",
-    amount: 721,
-    status: "success",
-    email: "sasd@hotmail.com",
-
-    pageurl: "https://www.acme.com",
-    pagetitle: "Your daily politics | Acme",
-    allowed: "No",
-    category: "Politics",
-    date: "2021-09-01",
-  },
-  {
-    id: "bhqe222cjd4p",
-    amount: 721,
-    status: "success",
-    email: "sasd@hotmail.com",
-
-    pageurl: "https://www.acme.com",
-    pagetitle: "Your daily politics | Acme",
-    allowed: "No",
-    category: "Politics",
-    date: "2021-09-01",
-  },
-
-  {
-    id: "bhqe21222cjd4p",
-    amount: 221,
-    status: "success",
-    email: "sasd@hotmail.com",
-
-    pageurl: "https://www.acme.com",
-    pagetitle: "Your daily politics | Acme",
-    allowed: "No",
-    category: "Politics",
-    date: "2021-09-01",
-  },
-  {
-    id: "bh2qecjd4p",
-    amount: 721,
-    status: "success",
-    email: "sasd@hotmail.com",
-
-    pageurl: "https://www.acme.com",
-    pagetitle: "Your daily politics | Acme",
-    allowed: "No",
-    category: "Politics",
-    date: "2021-09-01",
-  },
-  {
-    id: "bhq21ecjd4p",
-    amount: 721,
-    status: "success",
-    email: "sasd@hotmail.com",
-
-    pageurl: "https://www.acme.com",
-    pagetitle: "Your daily politics | Acme",
-    allowed: "No",
-    category: "Politics",
-    date: "2021-09-01",
-  },
-  {
-    id: "b21hqecjd4p",
-    amount: 721,
-    status: "success",
-    email: "sasd@hotmail.com",
-
-    pageurl: "https://www.acme.com",
-    pagetitle: "Your daily politics | Acme",
-    allowed: "No",
-    category: "Politics",
-    date: "2021-09-01",
-  },
-];
-
 export type Payment = {
-  id: string;
   amount?: number;
   status?: "pending" | "processing" | "success" | "failed";
   email?: string;
   pageurl?: string;
   pagetitle?: string;
   allowed?: string;
-  date?: string;
   category?: string;
-  time?: string;
+
+  // Keep
+  id: string;
+  date?: string;
+  totalPrice?: number;
+  totalCalories?: number;
+  sustainabilityScore?: number;
 };
 
 export const columns: ColumnDef<Payment>[] = [
@@ -287,7 +158,7 @@ export const columns: ColumnDef<Payment>[] = [
   },
 ];
 
-export function AnalyticsTable({ userId }: { userId: string }) {
+export function AnalyticsTable({ userEmail }: { userEmail?: string }) {
   const [sorting, setSorting] = React.useState<SortingState>([]);
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
     []
@@ -425,14 +296,14 @@ export function AnalyticsTable({ userId }: { userId: string }) {
     },
   ]);
   const fetchTableData = async () => {
-    if (userId) {
+    if (userEmail) {
       try {
         const res = await fetch(`/api/getTable`, {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
           },
-          body: JSON.stringify({ extension_user_id: userId }),
+          body: JSON.stringify({ extension_user_id: userEmail }),
         });
         if (!res.ok) {
           throw new Error(`HTTP error! status: ${res.status}`);
@@ -459,7 +330,7 @@ export function AnalyticsTable({ userId }: { userId: string }) {
   };
   React.useEffect(() => {
     fetchTableData();
-  }, [userId]);
+  }, [userEmail]);
   const [columnVisibility, setColumnVisibility] =
     React.useState<VisibilityState>({});
   const [rowSelection, setRowSelection] = React.useState({});

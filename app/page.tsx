@@ -30,16 +30,43 @@ export default function Home() {
   const { isSignedIn, user } = useUser();
   const [loading, setLoading] = useState(true);
   const [userEmail, setUserEmail] = useState("");
+  const [pieChartVal, setPieChartVal] = useState([]);
+
+  const fetchPieChartData = async (email: string) => {
+    const api = `https://greenerchoicebackend-0edf19fb0f9e.herokuapp.com/api/user/user_sustainability_doughnut_chart/?email=${email}`;
+
+    try {
+      const response = await fetch(api, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+      const data = await response.json();
+      const val = data["Sutainability Ratio :"];
+      const temp = [
+        { name: "Sustainable", value: val },
+        { name: "Non Sustainable", value: 100 - val },
+      ];
+      //@ts-ignore
+      setPieChartVal(temp);
+    } catch (error) {
+      console.log("fetchPieChartData_function", error);
+    }
+  };
 
   const fetchData = async () => {
     if (isLoaded && userId && isSignedIn) {
       // call API
       if (user.primaryEmailAddress?.emailAddress) {
         setUserEmail(user.primaryEmailAddress.emailAddress);
+        fetchPieChartData(user.primaryEmailAddress.emailAddress);
       }
-      setLoading(true);
+
+      setLoading(false);
     }
   };
+
   useEffect(() => {
     fetchData();
   }, [isLoaded, userId, isSignedIn]);
@@ -71,6 +98,7 @@ export default function Home() {
       }
     }
   };
+
   const handleUploadButtonClick = () => {
     const fileInput = document.querySelector(".file-input") as HTMLInputElement;
     fileInput.click();
@@ -121,7 +149,11 @@ export default function Home() {
                 </TabsList>
                 <TabsContent value="overview" className="space-y-4">
                   <div className="grid gap-4 lg:grid-cols-2">
-                    <ExpandedDashBoardCard loading={loading} userId={userId} />
+                    <ExpandedDashBoardCard
+                      data={pieChartVal}
+                      loading={loading}
+                      userId={userId}
+                    />
 
                     <div className="grid gap-4 grid-rows-2">
                       <DashBoardCard1
@@ -140,12 +172,10 @@ export default function Home() {
                     <CardHeader>
                       <CardTitle>History</CardTitle>
                       <CardDescription>
-                        See more browser history details.
+                        See your previous recipts.
                       </CardDescription>
                     </CardHeader>
-                    <CardContent>
-                      {userId && <AnalyticsTable userId={userId} />}
-                    </CardContent>
+                    <CardContent>{userId && <AnalyticsTable />}</CardContent>
                   </Card>
                 </TabsContent>
 
