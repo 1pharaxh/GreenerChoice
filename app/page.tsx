@@ -52,7 +52,7 @@ export default function Home() {
         "https://greenerchoicebackend-0edf19fb0f9e.herokuapp.com/api/receipt/scan_receipt/";
       const body = {
         image_url: out.url,
-        email: "test@gmail.com",
+        email: userEmail,
       };
       console.log(body);
 

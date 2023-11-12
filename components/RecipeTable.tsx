@@ -55,8 +55,8 @@ export function RecipeTable() {
   return (
     <>
       <Card>
-        <CardHeader>
-          <CardTitle>Current Recipes</CardTitle>
+        <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+          <CardTitle className="text-sm font-medium">Current Recipes</CardTitle>
           <CardContent className="w-full p-0">
             <Table className="">
               <TableCaption className="">
