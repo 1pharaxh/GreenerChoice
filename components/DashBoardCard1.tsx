@@ -37,7 +37,7 @@ export default function DashBoardCard1({
         </div>
         <div className="text-xs text-muted-foreground">
           {productivityScore ? (
-            "Here we can track our progress to see how we are doing!"
+            "Here we can track our last 7 day progress to see how we are doing!"
           ) : (
             <div>
               <Skeleton className=" w-[290px] h-2 mb-1" />

@@ -23,6 +23,7 @@ import { Button } from "@/components/ui/button";
 import ExpandedDashBoardCard from "@/components/ExpandedDashBoardCard";
 import { ReceipTable } from "@/components/ReceipTable";
 import { Leaderboard } from "@/components/Leaderboard";
+import { Separator } from "@/components/ui/separator";
 
 export default function Home() {
   const { isLoaded, userId } = useAuth();
@@ -33,6 +34,8 @@ export default function Home() {
   const [triggerUpdate, setTriggerUpdate] = useState(false);
   const [linechartData, setlineChartData] = useState([]);
   const [SustainablityScore, setSustainablityScore] = useState(0);
+
+  const [tabsValue, setTabsValue] = useState("overview");
 
   const fetchNotifications = async (email: string) => {
     const api = `https://greenerchoicebackend-0edf19fb0f9e.herokuapp.com/api/user/user_notifications/?email=${email}`;
@@ -174,13 +177,14 @@ export default function Home() {
             <div className=" flex-col flex w-full max-w-7xl">
               <div className="flex-1 space-y-4 p-8 pt-6">
                 <div className="flex items-center justify-between space-y-2">
-                  <h2 className="text-3xl font-bold tracking-tight">
-                    Dashboard
-                    <br />
-                    <span className="text-sm font-medium">
+                  <div>
+                    <h2 className="text-3xl font-bold tracking-tight">
+                      Dashboard
+                    </h2>
+                    <p className="text-muted-foreground">
                       Hello, {user?.firstName} welcome to Greener Choice
-                    </span>
-                  </h2>
+                    </p>
+                  </div>
                   <div className="flex items-end space-y-2 flex-col ">
                     <UserButton afterSignOutUrl="/" />
 
@@ -203,7 +207,17 @@ export default function Home() {
                     </Button>
                   </div>
                 </div>
-                <Tabs defaultValue="overview" className="space-y-4">
+                <Separator className="my-6" />
+
+                <Tabs
+                  defaultValue="overview"
+                  className="space-y-4"
+                  value={tabsValue}
+                  onValueChange={(value) => {
+                    setTabsValue(value);
+                    console.log(value);
+                  }}
+                >
                   <TabsList>
                     <TabsTrigger value="overview">Overview</TabsTrigger>
                     <TabsTrigger value="receipts">Receipts</TabsTrigger>
@@ -254,9 +268,7 @@ export default function Home() {
                     <ReceipTable />
                   </TabsContent>
 
-                  <TabsContent value="leaderboard">
-                    <Leaderboard />
-                  </TabsContent>
+                  <TabsContent value="leaderboard"></TabsContent>
                 </Tabs>
               </div>
             </div>
