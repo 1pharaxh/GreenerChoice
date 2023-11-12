@@ -15,6 +15,7 @@ import {
   PaperPlaneIcon,
 } from "@radix-ui/react-icons";
 import { ScrollArea } from "./ui/scroll-area";
+import QuizCard from "./QuizCard";
 
 // Define a type for the recipe object
 interface Receipts {
@@ -131,14 +132,8 @@ export function ReceipTable({
     fetchTableData();
   }, [userEmail]);
   return (
-    <div>
-      <div
-        className="
-      
-      grid
-      grid-cols-4
-      w-full space-x-4"
-      >
+    <div className="grid grid-cols-1 space-y-4">
+      <div className=" grid grid-cols-4 w-full space-x-4">
         <Card
           className="
         col-span-1
@@ -240,11 +235,18 @@ export function ReceipTable({
                 <Skeleton className="h-4 w-[200px]" />
                 <Skeleton className="h-4 w-[150px]" />
                 <Skeleton className="h-4 w-[100px]" />
+                <Skeleton className="h-4 w-[250px]" />
+                <Skeleton className="h-4 w-[200px]" />
+                <Skeleton className="h-4 w-[150px]" />
+                <Skeleton className="h-4 w-[100px]" />
+                <Skeleton className="h-4 w-[250px]" />
+                <Skeleton className="h-4 w-[200px]" />
               </div>
             </div>
           </Card>
         )}
       </div>
+      <QuizCard email={userEmail} />
     </div>
   );
 }
