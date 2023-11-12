@@ -129,13 +129,12 @@ export default function Home() {
 
   useEffect(() => {
     console.log("useEffect triggered");
-    setLoading(true);
     fetchData();
-    setLoading(false);
   }, [isLoaded, userId, isSignedIn, triggerUpdate]);
   const productivityScore = 20;
 
   const cloudinaryToBackend = async (res: any) => {
+    setLoading(true);
     const out: any = res.info;
     if (out) {
       const apiUrl =
@@ -160,6 +159,7 @@ export default function Home() {
         console.log("cloudinaryToBackend_function", error);
       } finally {
         setTriggerUpdate(!triggerUpdate);
+        setLoading(false);
       }
     }
   };
@@ -170,7 +170,7 @@ export default function Home() {
   };
   return (
     <>
-      {userEmail && (
+      {userEmail && loading !== true && (
         <main className="flex min-h-screen w-full flex-col items-center justify-between ">
           <NewUserQuiz email={userEmail} />
 
@@ -277,6 +277,12 @@ export default function Home() {
             </div>
           </>
         </main>
+      )}
+
+      {loading === true && (
+        <div className="flex items-center justify-center min-h-screen w-full">
+          <div className="animate-spin rounded-full h-56 w-56 border-t-2 border-b-2 border-green-700"></div>
+        </div>
       )}
     </>
   );
