@@ -26,6 +26,8 @@ import {
 import { InfoCircledIcon, PlusIcon } from "@radix-ui/react-icons";
 import { TooltipArrow } from "@radix-ui/react-tooltip";
 import { BigPieChart } from "@/components/BigPieChart";
+import { RecipeTable } from "@/components/RecipeTable";
+import { RecipeChart } from "@/components/RecipeChart";
 import { AnalyticsTable } from "@/components/analyticstable";
 import { Button } from "@/components/ui/button";
 
@@ -51,6 +53,7 @@ export default function Home() {
     fetchData();
   }, [isLoaded, userId, isSignedIn]);
   const productivityScore = 20;
+
   return (
     <>
       {!loading && (
@@ -100,9 +103,9 @@ export default function Home() {
                 <Tabs defaultValue="overview" className="space-y-4">
                   <TabsList>
                     <TabsTrigger value="overview">Overview</TabsTrigger>
-                    <TabsTrigger value="analytics">Analytics</TabsTrigger>
-                    <TabsTrigger value="settings" disabled>
-                      Settings
+                    <TabsTrigger value="recipes">Recipes</TabsTrigger>
+                    <TabsTrigger value="suggestions">
+                      Suggestions
                     </TabsTrigger>
                   </TabsList>
                   <TabsContent value="overview" className="space-y-4">
@@ -178,6 +181,26 @@ export default function Home() {
                       </CardContent>
                     </Card>
                   </TabsContent>
+
+                  {/* <TabsContent value="recipes">
+                      <div className="grid gap-4 lg:grid-cols-2">
+                      <RecipeTable />
+                      <Card>
+                      <RecipeChart />
+                    </Card>
+                      </div>
+                  </TabsContent> */}
+
+                  <TabsContent value="recipes">
+                  <RecipeChart />
+                      <div className="grid gap-4 lg:grid-cols-2">
+                      <RecipeTable />
+                      <Card>
+                      
+                    </Card>
+                      </div>
+                  </TabsContent>
+
                 </Tabs>
               </div>
             </div>
