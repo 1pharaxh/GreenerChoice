@@ -12,22 +12,12 @@ import {
 import { UserButton, useAuth } from "@clerk/nextjs";
 import { useUser } from "@clerk/nextjs";
 
-import { Skeleton } from "@/components/ui/skeleton";
 import { useEffect, useState } from "react";
-import { TinyLineChart } from "@/components/TinyLineChart";
 import DashBoardCard1 from "@/components/DashBoardCard1";
 import DashBoardCard2 from "@/components/DashBoardCard2";
 import { CldUploadButton } from "next-cloudinary";
 
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipProvider,
-  TooltipTrigger,
-} from "@/components/ui/tooltip";
-import { InfoCircledIcon, PlusIcon } from "@radix-ui/react-icons";
-import { TooltipArrow } from "@radix-ui/react-tooltip";
-import { BigPieChart } from "@/components/BigPieChart";
+import { PlusIcon } from "@radix-ui/react-icons";
 import { AnalyticsTable } from "@/components/analyticstable";
 import { Button } from "@/components/ui/button";
 import ExpandedDashBoardCard from "@/components/ExpandedDashBoardCard";
@@ -127,7 +117,16 @@ export default function Home() {
                   <TabsList>
                     <TabsTrigger value="overview">Overview</TabsTrigger>
                     <TabsTrigger value="recipes">Recipes</TabsTrigger>
+<<<<<<< Updated upstream
+<<<<<<< Updated upstream
                     <TabsTrigger value="suggestions">Suggestions</TabsTrigger>
+=======
+=======
+>>>>>>> Stashed changes
+                    <TabsTrigger value="leaderboard">
+                    Leaderboard
+                    </TabsTrigger>
+>>>>>>> Stashed changes
                   </TabsList>
                   <TabsContent value="overview" className="space-y-4">
                     <div className="grid gap-4 lg:grid-cols-2">
@@ -169,6 +168,21 @@ export default function Home() {
                       <Card></Card>
                     </div>
                   </TabsContent>
+<<<<<<< Updated upstream
+=======
+
+                  <TabsContent value="leaderboard">
+                  <Leaderboard />
+                  </TabsContent>
+
+<<<<<<< Updated upstream
+>>>>>>> Stashed changes
+=======
+                  <TabsContent value="leaderboard">
+                  <Leaderboard />
+                  </TabsContent>
+
+>>>>>>> Stashed changes
                 </Tabs>
               </div>
             </div>
