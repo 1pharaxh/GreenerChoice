@@ -17,7 +17,7 @@ const data = [
 ];
 const COLORS = ["#0088FE", "#00C49F", "#FFBB28", "#FF8042"];
 
-export function RecipeChart({ loading }: { loading: boolean }) {
+export function RecipeChart() {
   // check if user is on phone or computer if he is then set a state variable to true
   const [onMobile, setOnMobile] = useState(false);
   useEffect(() => {

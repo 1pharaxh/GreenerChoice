@@ -182,23 +182,21 @@ export default function Home() {
                     </Card>
                   </TabsContent>
 
-                  {/* <TabsContent value="recipes">
-                      <div className="grid gap-4 lg:grid-cols-2">
-                      <RecipeTable />
-                      <Card>
-                      <RecipeChart />
-                    </Card>
-                      </div>
-                  </TabsContent> */}
-
                   <TabsContent value="recipes">
                   <RecipeChart />
                       <div className="grid gap-4 lg:grid-cols-2">
                       <RecipeTable />
                       <Card>
-                      
                     </Card>
                       </div>
+                  </TabsContent>
+
+                  <TabsContent value="suggestions">
+                    <Card>
+                      <CardHeader>
+                        <CardTitle>Items</CardTitle>
+                      </CardHeader>
+                    </Card>
                   </TabsContent>
 
                 </Tabs>
