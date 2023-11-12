@@ -53,6 +53,7 @@ export default function NewUserQuiz({ email }: { email: string }) {
         age: age,
         gender: gender,
         activity_level: activityLevel,
+        daily_calories_count: 0,
       };
       console.log(body);
       try {
@@ -64,7 +65,6 @@ export default function NewUserQuiz({ email }: { email: string }) {
           body: JSON.stringify(body),
         });
         const data = await response.json();
-        console.log(data);
         localStorage.setItem("user", "true");
         setShowDialog(false);
       } catch (error) {
