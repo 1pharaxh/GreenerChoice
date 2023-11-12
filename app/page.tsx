@@ -21,8 +21,7 @@ import { PlusIcon } from "@radix-ui/react-icons";
 import { AnalyticsTable } from "@/components/analyticstable";
 import { Button } from "@/components/ui/button";
 import ExpandedDashBoardCard from "@/components/ExpandedDashBoardCard";
-import { RecipeChart } from "@/components/RecipeChart";
-import { RecipeTable } from "@/components/RecipeTable";
+import { ReceipTable } from "@/components/ReceipTable";
 import { Leaderboard } from "@/components/Leaderboard";
 
 export default function Home() {
@@ -144,7 +143,7 @@ export default function Home() {
               <Tabs defaultValue="overview" className="space-y-4">
                 <TabsList>
                   <TabsTrigger value="overview">Overview</TabsTrigger>
-                  <TabsTrigger value="recipes">Recipes</TabsTrigger>
+                  <TabsTrigger value="receipts">Receipts</TabsTrigger>
                   <TabsTrigger value="leaderboard">Leaderboard</TabsTrigger>
                 </TabsList>
                 <TabsContent value="overview" className="space-y-4">
@@ -175,14 +174,14 @@ export default function Home() {
                         See your previous recipts.
                       </CardDescription>
                     </CardHeader>
-                    <CardContent>{userId && <AnalyticsTable />}</CardContent>
+                    <CardContent>
+                      {userId && <AnalyticsTable userEmail={userEmail} />}
+                    </CardContent>
                   </Card>
                 </TabsContent>
 
-                <TabsContent value="recipes">
-                  <div className="grid gap-4 lg:grid-cols-2">
-                    <RecipeTable />
-                  </div>
+                <TabsContent value="receipts">
+                  <ReceipTable />
                 </TabsContent>
 
                 <TabsContent value="leaderboard">

@@ -108,7 +108,7 @@ export const columns: ColumnDef<Payment>[] = [
     ),
   },
   {
-    accessorKey: "Total Price",
+    accessorKey: "totalPrice",
     header: "Total Price",
     cell: ({ row }) => (
       <div className=" w-[130px]  line-clamp-1">
@@ -117,14 +117,14 @@ export const columns: ColumnDef<Payment>[] = [
     ),
   },
   {
-    accessorKey: "Total Calories",
+    accessorKey: "totalCalories",
     header: "Total Calories",
     cell: ({ row }) => (
       <div className="capitalize">{row.getValue("totalCalories")}</div>
     ),
   },
   {
-    accessorKey: "Suatainability Score",
+    accessorKey: "sustainabilityScore",
     header: "Suatainability Score",
     cell: ({ row }) => (
       <div className="capitalize">{row.getValue("sustainabilityScore")}</div>
@@ -166,161 +166,45 @@ export function AnalyticsTable({ userEmail }: { userEmail?: string }) {
     []
   );
   const [dataTable, setdataTable] = React.useState<Payment[]>([
-    {
-      id: "m5gr84i9",
-
-      pageurl: "https://www.google.com",
-      pagetitle: "Google",
-      allowed: "Yes",
-      category: "Others",
-      date: "2021-09-01",
-    },
-    {
-      id: "3u1reuv4",
-      amount: 242,
-      status: "success",
-      email: "Abe45@gmail.com",
-
-      pageurl: "https://www.acme.com",
-      pagetitle: "Your daily politics | Acme",
-      allowed: "No",
-      category: "Politics",
-      date: "2021-09-01",
-    },
-    {
-      id: "derv1ws0",
-      amount: 837,
-      status: "processing",
-      email: "Monserrat44@gmail.com",
-
-      pageurl: "https://www.acme.com",
-      pagetitle: "Your daily politics | Acme",
-      allowed: "No",
-      category: "Politics",
-      date: "2021-09-01",
-    },
-    {
-      id: "5kma53ae",
-      amount: 874,
-      status: "success",
-      email: "Silas22@gmail.com",
-
-      pageurl: "https://www.acme.com",
-      pagetitle: "Your daily politics | Acme",
-      allowed: "No",
-      category: "Politics",
-      date: "2021-09-01",
-    },
-    {
-      id: "bhqecj4p",
-      amount: 721,
-      status: "failed",
-      email: "carmella@hotmail.com",
-
-      pageurl: "https://www.acme.com",
-      pagetitle: "Your daily politics | Acme",
-      allowed: "No",
-      category: "Politics",
-      date: "2021-09-01",
-    },
-    {
-      id: "bhqecjd4p",
-      amount: 721,
-      status: "success",
-      email: "sasd@hotmail.com",
-
-      pageurl: "https://www.acme.com",
-      pagetitle: "Your daily politics | Acme",
-      allowed: "No",
-      category: "Politics",
-      date: "2021-09-01",
-    },
-    {
-      id: "bhqe222cjd4p",
-      amount: 721,
-      status: "success",
-      email: "sasd@hotmail.com",
-
-      pageurl: "https://www.acme.com",
-      pagetitle: "Your daily politics | Acme",
-      allowed: "No",
-      category: "Politics",
-      date: "2021-09-01",
-    },
-
-    {
-      id: "bhqe21222cjd4p",
-      amount: 221,
-      status: "success",
-      email: "sasd@hotmail.com",
-
-      pageurl: "https://www.acme.com",
-      pagetitle: "Your daily politics | Acme",
-      allowed: "No",
-      category: "Politics",
-      date: "2021-09-01",
-    },
-    {
-      id: "bh2qecjd4p",
-      amount: 721,
-      status: "success",
-      email: "sasd@hotmail.com",
-
-      pageurl: "https://www.acme.com",
-      pagetitle: "Your daily politics | Acme",
-      allowed: "No",
-      category: "Politics",
-      date: "2021-09-01",
-    },
-    {
-      id: "bhq21ecjd4p",
-      amount: 721,
-      status: "success",
-      email: "sasd@hotmail.com",
-
-      pageurl: "https://www.acme.com",
-      pagetitle: "Your daily politics | Acme",
-      allowed: "No",
-      category: "Politics",
-      date: "2021-09-01",
-    },
-    {
-      id: "b21hqecjd4p",
-      amount: 721,
-      status: "success",
-      email: "sasd@hotmail.com",
-
-      pageurl: "https://www.acme.com",
-      pagetitle: "Your daily politics | Acme",
-      allowed: "No",
-      category: "Politics",
-      date: "2021-09-01",
-    },
+    // {
+    //   id: "temp",
+    //   pageurl: "https://www.google.com",
+    //   pagetitle: "Google",
+    //   allowed: "Yes",
+    //   category: "Others",
+    //   date: "2021-09-01",
+    // },
   ]);
   const fetchTableData = async () => {
     if (userEmail) {
+      const api =
+        "https://greenerchoicebackend-0edf19fb0f9e.herokuapp.com/api/receipt/receipts_table_view";
       try {
-        const res = await fetch(`/api/getTable`, {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({ extension_user_id: userEmail }),
-        });
+        // ${api}/?email=${userEmail}
+        const res = await fetch(
+          `https://greenerchoicebackend-0edf19fb0f9e.herokuapp.com/api/receipt/receipts_table_view/?email=fardeenfaisal.fs@gmail.com`,
+          {
+            method: "GET",
+            headers: {
+              "Content-Type": "application/json",
+            },
+          }
+        );
         if (!res.ok) {
           throw new Error(`HTTP error! status: ${res.status}`);
         }
         const data = await res.json();
+        console.log("GOT TABLE DATA", data);
         if (data) {
           console.log("GOT TABLE DATA", data);
-          const tableData = data.table.map((row: any) => {
+          const tableData = Object.keys(data).map((id) => {
+            const row = data[id];
             return {
-              id: row._id,
-              pageurl: row.url,
-              pagetitle: row.page_title,
-              allowed: row.allowed === true ? "Yes" : "No",
-              category: row.category,
-              date: new Date(row.date).toLocaleDateString("en-CA"),
+              id: id,
+              totalPrice: row.Receipt_Price_Total,
+              totalCalories: row.Receipt_Calories_Total,
+              sustainabilityScore: row["Sustainability Score"].toFixed(2),
+              date: new Date(row.Receipt_Date).toLocaleDateString("en-CA"),
             };
           });
           setdataTable(tableData);
@@ -361,12 +245,10 @@ export function AnalyticsTable({ userEmail }: { userEmail?: string }) {
     <div className="w-full">
       <div className="flex items-center py-4">
         <Input
-          placeholder="Filter titles..."
-          value={
-            (table.getColumn("pagetitle")?.getFilterValue() as string) ?? ""
-          }
+          placeholder="Filter by Date"
+          value={(table.getColumn("date")?.getFilterValue() as string) ?? ""}
           onChange={(event) =>
-            table.getColumn("pagetitle")?.setFilterValue(event.target.value)
+            table.getColumn("date")?.setFilterValue(event.target.value)
           }
           className="max-w-sm"
         />
