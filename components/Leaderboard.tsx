@@ -7,7 +7,7 @@ import {
     CardTitle,
   } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Table, TableBody, TableHeader, TableHead, TableRow } from "@/components/ui/table";
+import { Table, TableBody, TableHeader, TableHead, TableRow, TableCell } from "@/components/ui/table";
 
 export function Leaderboard() {
 
@@ -69,7 +69,15 @@ export function Leaderboard() {
                 </TableHeader>
                 <TableBody>
                     <TableRow>
-
+                        <TableCell>
+                            1
+                        </TableCell>
+                        <TableCell>
+                            John Doe
+                        </TableCell>
+                        <TableCell>
+                            298782
+                        </TableCell>
                     </TableRow>
                 </TableBody>
             </Table>
