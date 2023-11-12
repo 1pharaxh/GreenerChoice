@@ -59,10 +59,12 @@ export type Payment = {
 
 export function AnalyticsTable({
   userEmail,
+  setTabsValue,
   setReceiptTabId,
   loading,
 }: {
   userEmail?: string;
+  setTabsValue: React.Dispatch<React.SetStateAction<string>>;
   setReceiptTabId: React.Dispatch<React.SetStateAction<string>>;
   loading: boolean;
 }) {
@@ -207,7 +209,12 @@ export function AnalyticsTable({
             </DropdownMenuTrigger>
             <DropdownMenuContent align="end">
               <DropdownMenuLabel>Actions</DropdownMenuLabel>
-              <DropdownMenuItem onClick={() => setReceiptTabId(payment.id)}>
+              <DropdownMenuItem
+                onClick={() => {
+                  setReceiptTabId(payment.id);
+                  setTabsValue("receipts");
+                }}
+              >
                 View Receipt
               </DropdownMenuItem>
               {/* <DropdownMenuSeparator /> */}

@@ -62,7 +62,7 @@ export function ReceipTable({
   const [selectedReceipt, setSelectedReceipt] = useState([]);
 
   const [dataTableIds, setdataTableIds] = useState<any>([]);
-  const [receiptName, setreceiptName] = useState([]);
+  const [receiptName, setreceiptName] = useState("");
 
   const [suggestions, setSuggestions] = useState([]);
 
@@ -130,6 +130,10 @@ export function ReceipTable({
   };
   useEffect(() => {
     fetchTableData();
+    if (receiptTabId) {
+      fetchRowData(receiptTabId);
+      setreceiptName(receiptTabId);
+    }
   }, [userEmail]);
   return (
     <div className="grid grid-cols-1 space-y-4">
