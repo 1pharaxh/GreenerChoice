@@ -36,13 +36,22 @@ const demoData: Data[] = [
 export function TinyLineChart({
   userId,
   loading,
+  chartData,
   className,
 }: {
   userId?: any;
   loading: number;
+  chartData: any;
   className?: string;
 }) {
-  const data = demoData;
+  const transformedData = Object.entries(chartData).map(
+    ([date, productivityScore]) => ({
+      date,
+      //@ts-ignore
+      productivityScore: Math.round(productivityScore * 100) / 100,
+    })
+  );
+  const data = transformedData;
 
   return (
     <div className={"h-[170px] " + className}>
@@ -84,7 +93,7 @@ export function TinyLineChart({
                 color: "#659D0A",
               }}
               formatter={(value) => [`${value}`, "Points"]}
-              labelFormatter={(label) => ``}
+              labelFormatter={(label) => `${data[label].date}`}
             />
           </AreaChart>
         </ResponsiveContainer>

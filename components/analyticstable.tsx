@@ -160,7 +160,13 @@ export const columns: ColumnDef<Payment>[] = [
   },
 ];
 
-export function AnalyticsTable({ userEmail }: { userEmail?: string }) {
+export function AnalyticsTable({
+  userEmail,
+  loading,
+}: {
+  userEmail?: string;
+  loading: boolean;
+}) {
   const [sorting, setSorting] = React.useState<SortingState>([]);
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
     []
@@ -176,44 +182,43 @@ export function AnalyticsTable({ userEmail }: { userEmail?: string }) {
     // },
   ]);
   const fetchTableData = async () => {
-    if (userEmail) {
-      const api =
-        "https://greenerchoicebackend-0edf19fb0f9e.herokuapp.com/api/receipt/receipts_table_view";
-      try {
-        // ${api}/?email=${userEmail}
-        const res = await fetch(`${api}/?email=${userEmail}`, {
-          method: "GET",
-          headers: {
-            "Content-Type": "application/json",
-          },
-        });
-        if (!res.ok) {
-          throw new Error(`HTTP error! status: ${res.status}`);
-        }
-        const data = await res.json();
-        console.log("GOT TABLE DATA", data);
-        if (data) {
-          console.log("GOT TABLE DATA", data);
-          const tableData = Object.keys(data).map((id) => {
-            const row = data[id];
-            return {
-              id: id,
-              totalPrice: row.Receipt_Price_Total,
-              totalCalories: row.Receipt_Calories_Total,
-              sustainabilityScore: row["Sustainability Score"].toFixed(2),
-              date: new Date(row.Receipt_Date).toLocaleDateString("en-CA"),
-            };
-          });
-          setdataTable(tableData);
-        }
-      } catch (error) {
-        console.error("Fetch error:", error);
+    const api =
+      "https://greenerchoicebackend-0edf19fb0f9e.herokuapp.com/api/receipt/receipts_table_view";
+    try {
+      // ${api}/?email=${userEmail}
+      const res = await fetch(`${api}/?email=${userEmail}`, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+      if (!res.ok) {
+        throw new Error(`HTTP error! status: ${res.status}`);
       }
+      const data = await res.json();
+      console.log("GOT TABLE DATA", data);
+      if (data) {
+        console.log("GOT TABLE DATA", data);
+        const tableData = Object.keys(data).map((id) => {
+          const row = data[id];
+          return {
+            id: id,
+            totalPrice: row.Receipt_Price_Total,
+            totalCalories: row.Receipt_Calories_Total,
+            sustainabilityScore: row["Sustainability Score"].toFixed(2),
+            date: new Date(row.Receipt_Date).toLocaleDateString("en-CA"),
+          };
+        });
+        setdataTable(tableData);
+      }
+    } catch (error) {
+      console.error("Fetch error:", error);
     }
   };
   React.useEffect(() => {
     fetchTableData();
-  }, [userEmail]);
+  }, [userEmail, loading]);
+
   const [columnVisibility, setColumnVisibility] =
     React.useState<VisibilityState>({});
   const [rowSelection, setRowSelection] = React.useState({});

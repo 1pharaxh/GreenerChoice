@@ -7,10 +7,12 @@ export default function DashBoardCard1({
   productivityScore,
   userId,
   className,
+  chartData,
 }: {
   productivityScore: number;
   userId: any;
   className?: string;
+  chartData: any;
 }) {
   return (
     <Card className={className}>
@@ -57,6 +59,7 @@ export default function DashBoardCard1({
         </div>
         <TinyLineChart
           className="mt-4"
+          chartData={chartData}
           loading={productivityScore}
           userId={userId}
         />
