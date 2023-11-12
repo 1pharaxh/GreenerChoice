@@ -9,10 +9,12 @@ import {
   TableCell,
 } from "@/components/ui/table";
 import { Skeleton } from "@/components/ui/skeleton";
-import { ExclamationTriangleIcon } from "@radix-ui/react-icons";
+import {
+  CrumpledPaperIcon,
+  ExclamationTriangleIcon,
+  PaperPlaneIcon,
+} from "@radix-ui/react-icons";
 import { ScrollArea } from "./ui/scroll-area";
-import { SelectSeparator } from "./ui/select";
-import { Separator } from "./ui/separator";
 
 // Define a type for the recipe object
 interface Receipts {
@@ -21,7 +23,7 @@ interface Receipts {
   procedure: string[];
 }
 
-export function ReceipTable() {
+export function ReceipTable({ receiptTabId }: { receiptTabId: string }) {
   const [selectedReceipt, setSelectedReceipt] = useState<Receipts | null>(null);
 
   const recipes: Receipts[] = [
@@ -62,7 +64,7 @@ export function ReceipTable() {
         <Card className="w-full">
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
             <CardTitle className="text-sm font-medium">All Receipts</CardTitle>
-            <ExclamationTriangleIcon className="h-4 w-4 text-muted-foreground" />
+            <CrumpledPaperIcon className="h-4 w-4 text-muted-foreground" />
           </CardHeader>
           <CardContent className="w-full">
             <Table>
@@ -92,7 +94,7 @@ export function ReceipTable() {
               <CardTitle className="text-sm font-medium">
                 {selectedReceipt.name}
               </CardTitle>
-              <ExclamationTriangleIcon className="h-4 w-4 text-muted-foreground" />
+              <PaperPlaneIcon className="h-4 w-4 text-muted-foreground" />
             </CardHeader>
             <CardContent>
               <ScrollArea className="h-48">
@@ -105,7 +107,7 @@ export function ReceipTable() {
                   ))}
                 </ul>
                 <h6 className="text-md font-bold mt-[10px]">
-                  <b>Our Suggestions: </b>
+                  <b>From your personal 🤖 trainer: </b>
                 </h6>
                 <ul>
                   {selectedReceipt.procedure.map((procedure, index) => (

@@ -57,114 +57,13 @@ export type Payment = {
   sustainabilityScore?: number;
 };
 
-export const columns: ColumnDef<Payment>[] = [
-  {
-    id: "select",
-    header: ({ table }) => (
-      <Checkbox
-        checked={table.getIsAllPageRowsSelected()}
-        onCheckedChange={(value) => table.toggleAllPageRowsSelected(!!value)}
-        aria-label="Select all"
-      />
-    ),
-    cell: ({ row }) => (
-      <Checkbox
-        checked={row.getIsSelected()}
-        onCheckedChange={(value) => row.toggleSelected(!!value)}
-        aria-label="Select row"
-      />
-    ),
-    enableSorting: false,
-    enableHiding: false,
-  },
-
-  {
-    accessorKey: "id",
-    header: ({ column }) => {
-      return (
-        <Button
-          variant="ghost"
-          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-        >
-          ID
-          <CaretSortIcon className="ml-2 h-4 w-4" />
-        </Button>
-      );
-    },
-    cell: ({ row }) => (
-      <div className="lowercase w-[150px]  line-clamp-1">
-        {row.getValue("id")}
-      </div>
-    ),
-  },
-
-  {
-    accessorKey: "date",
-    header: "Date",
-    cell: ({ row }) => (
-      <div className="capitalize  w-[100px]  line-clamp-1">
-        {row.getValue("date")}
-      </div>
-    ),
-  },
-  {
-    accessorKey: "totalPrice",
-    header: "Total Price",
-    cell: ({ row }) => (
-      <div className=" w-[130px]  line-clamp-1">
-        {row.getValue("totalPrice")}
-      </div>
-    ),
-  },
-  {
-    accessorKey: "totalCalories",
-    header: "Total Calories",
-    cell: ({ row }) => (
-      <div className="capitalize">{row.getValue("totalCalories")}</div>
-    ),
-  },
-  {
-    accessorKey: "sustainabilityScore",
-    header: "Suatainability Score",
-    cell: ({ row }) => (
-      <div className="capitalize">{row.getValue("sustainabilityScore")}</div>
-    ),
-  },
-  {
-    id: "actions",
-    enableHiding: false,
-    cell: ({ row }) => {
-      const payment = row.original;
-
-      return (
-        <DropdownMenu>
-          <DropdownMenuTrigger asChild>
-            <Button variant="ghost" className="h-8 w-8 p-0">
-              <span className="sr-only">Open menu</span>
-              <DotsHorizontalIcon className="h-4 w-4" />
-            </Button>
-          </DropdownMenuTrigger>
-          <DropdownMenuContent align="end">
-            <DropdownMenuLabel>Actions</DropdownMenuLabel>
-            <DropdownMenuItem
-              onClick={() => navigator.clipboard.writeText(payment.id)}
-            >
-              View Recipt
-            </DropdownMenuItem>
-            <DropdownMenuSeparator />
-            <DropdownMenuItem>View Tab 2</DropdownMenuItem>
-          </DropdownMenuContent>
-        </DropdownMenu>
-      );
-    },
-  },
-];
-
 export function AnalyticsTable({
   userEmail,
+  setReceiptTabId,
   loading,
 }: {
   userEmail?: string;
+  setReceiptTabId: React.Dispatch<React.SetStateAction<string>>;
   loading: boolean;
 }) {
   const [sorting, setSorting] = React.useState<SortingState>([]);
@@ -218,6 +117,107 @@ export function AnalyticsTable({
   React.useEffect(() => {
     fetchTableData();
   }, [userEmail, loading]);
+
+  const columns: ColumnDef<Payment>[] = [
+    {
+      id: "select",
+      header: ({ table }) => (
+        <Checkbox
+          checked={table.getIsAllPageRowsSelected()}
+          onCheckedChange={(value) => table.toggleAllPageRowsSelected(!!value)}
+          aria-label="Select all"
+        />
+      ),
+      cell: ({ row }) => (
+        <Checkbox
+          checked={row.getIsSelected()}
+          onCheckedChange={(value) => row.toggleSelected(!!value)}
+          aria-label="Select row"
+        />
+      ),
+      enableSorting: false,
+      enableHiding: false,
+    },
+
+    {
+      accessorKey: "id",
+      header: ({ column }) => {
+        return (
+          <Button
+            variant="ghost"
+            onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+          >
+            ID
+            <CaretSortIcon className="ml-2 h-4 w-4" />
+          </Button>
+        );
+      },
+      cell: ({ row }) => (
+        <div className="lowercase w-[150px]  line-clamp-1">
+          {row.getValue("id")}
+        </div>
+      ),
+    },
+
+    {
+      accessorKey: "date",
+      header: "Date",
+      cell: ({ row }) => (
+        <div className="capitalize  w-[100px]  line-clamp-1">
+          {row.getValue("date")}
+        </div>
+      ),
+    },
+    {
+      accessorKey: "totalPrice",
+      header: "Total Price",
+      cell: ({ row }) => (
+        <div className=" w-[130px]  line-clamp-1">
+          {row.getValue("totalPrice")}
+        </div>
+      ),
+    },
+    {
+      accessorKey: "totalCalories",
+      header: "Total Calories",
+      cell: ({ row }) => (
+        <div className="capitalize">{row.getValue("totalCalories")}</div>
+      ),
+    },
+    {
+      accessorKey: "sustainabilityScore",
+      header: "Suatainability Score",
+      cell: ({ row }) => (
+        <div className="capitalize">{row.getValue("sustainabilityScore")}</div>
+      ),
+    },
+    {
+      id: "actions",
+      enableHiding: false,
+      cell: ({ row }) => {
+        const payment = row.original;
+
+        return (
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <Button variant="ghost" className="h-8 w-8 p-0">
+                <span className="sr-only">Open menu</span>
+                <DotsHorizontalIcon className="h-4 w-4" />
+              </Button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent align="end">
+              <DropdownMenuLabel>Actions</DropdownMenuLabel>
+              <DropdownMenuItem onClick={() => setReceiptTabId(payment.id)}>
+                View Receipt
+              </DropdownMenuItem>
+              {/* <DropdownMenuSeparator /> */}
+              {/* <DropdownMenuItem>View Tab 2</DropdownMenuItem> */}
+            </DropdownMenuContent>
+          </DropdownMenu>
+        );
+      },
+    },
+  ];
 
   const [columnVisibility, setColumnVisibility] =
     React.useState<VisibilityState>({});

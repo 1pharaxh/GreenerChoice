@@ -34,6 +34,7 @@ export default function Home() {
   const [triggerUpdate, setTriggerUpdate] = useState(false);
   const [linechartData, setlineChartData] = useState([]);
   const [SustainablityScore, setSustainablityScore] = useState(0);
+  const [receiptTabId, setReceiptTabId] = useState("");
 
   const [tabsValue, setTabsValue] = useState("overview");
 
@@ -221,7 +222,6 @@ export default function Home() {
                   <TabsList>
                     <TabsTrigger value="overview">Overview</TabsTrigger>
                     <TabsTrigger value="receipts">Receipts</TabsTrigger>
-                    <TabsTrigger value="leaderboard">Leaderboard</TabsTrigger>
                   </TabsList>
                   <TabsContent value="overview" className="space-y-4">
                     <div className="grid gap-4 lg:grid-cols-2">
@@ -258,6 +258,7 @@ export default function Home() {
                           <AnalyticsTable
                             loading={loading}
                             userEmail={userEmail}
+                            setReceiptTabId={setReceiptTabId}
                           />
                         )}
                       </CardContent>
@@ -265,10 +266,8 @@ export default function Home() {
                   </TabsContent>
 
                   <TabsContent value="receipts">
-                    <ReceipTable />
+                    <ReceipTable receiptTabId={receiptTabId} />
                   </TabsContent>
-
-                  <TabsContent value="leaderboard"></TabsContent>
                 </Tabs>
               </div>
             </div>
