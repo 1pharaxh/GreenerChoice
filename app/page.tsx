@@ -31,6 +31,8 @@ import { BigPieChart } from "@/components/BigPieChart";
 import { AnalyticsTable } from "@/components/analyticstable";
 import { Button } from "@/components/ui/button";
 import ExpandedDashBoardCard from "@/components/ExpandedDashBoardCard";
+import { RecipeChart } from "@/components/RecipeChart";
+import { RecipeTable } from "@/components/RecipeTable";
 
 export default function Home() {
   const { isLoaded, userId } = useAuth();
