@@ -35,15 +35,35 @@ export default function NewUserQuiz({ email }: { email: string }) {
 
   const [error, setError] = useState("");
 
+  const fetchUserData = async () => {
+    const getresponse = await fetch(`${apiUrl}?email=${email}`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+    const getdata = await getresponse.json();
+    if (getdata.length !== 0) {
+      console.log("GOT_DATA_NewUserQuiz", getdata);
+      localStorage.setItem("user", "true");
+      setShowDialog(false);
+      return;
+    } else {
+      setShowDialog(true);
+    }
+  };
+
   useEffect(() => {
     if (!localStorage.getItem("user")) {
       setShowDialog(true);
+      return;
     }
+    fetchUserData();
   }, []);
+  const apiUrl =
+    "https://greenerchoicebackend-0edf19fb0f9e.herokuapp.com/api/user/";
 
   const handleSubmission = async () => {
-    const apiUrl =
-      "https://greenerchoicebackend-0edf19fb0f9e.herokuapp.com/api/user/";
     if (weight && height && age && gender && activityLevel) {
       setError("");
       const body = {
@@ -57,6 +77,8 @@ export default function NewUserQuiz({ email }: { email: string }) {
       };
       console.log(body);
       try {
+        const apiUrl =
+          "https://greenerchoicebackend-0edf19fb0f9e.herokuapp.com/api/user/";
         const response = await fetch(apiUrl, {
           method: "POST",
           headers: {

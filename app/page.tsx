@@ -30,6 +30,7 @@ import { TooltipArrow } from "@radix-ui/react-tooltip";
 import { BigPieChart } from "@/components/BigPieChart";
 import { AnalyticsTable } from "@/components/analyticstable";
 import { Button } from "@/components/ui/button";
+import ExpandedDashBoardCard from "@/components/ExpandedDashBoardCard";
 
 export default function Home() {
   const { isLoaded, userId } = useAuth();
@@ -130,51 +131,10 @@ export default function Home() {
                   </TabsList>
                   <TabsContent value="overview" className="space-y-4">
                     <div className="grid gap-4 lg:grid-cols-2">
-                      <Card>
-                        <CardHeader>
-                          <div className="flex flex-row items-center justify-between space-y-0 pb-2">
-                            <div>
-                              {productivityScore ? (
-                                <CardTitle>
-                                  Expanded Productivity Score
-                                </CardTitle>
-                              ) : (
-                                <Skeleton className=" w-[150px] h-5 my-1" />
-                              )}
-                              {productivityScore ? (
-                                <CardDescription>
-                                  Learn more about your productivity score.
-                                </CardDescription>
-                              ) : (
-                                <Skeleton className=" w-[130px] h-[0.9rem] my-1" />
-                              )}
-                            </div>
-
-                            <TooltipProvider>
-                              <Tooltip>
-                                <TooltipTrigger asChild>
-                                  <InfoCircledIcon className="h-5 w-5 text-muted-foreground" />
-                                </TooltipTrigger>
-                                <TooltipContent
-                                  side="left"
-                                  className="bg-black max-w-[150px] text-white rounded-md p-3 space-y-0"
-                                >
-                                  <TooltipArrow />
-                                  <p className="text-sm font-medium">
-                                    This chart shows your productivity score
-                                    every week with more data.
-                                  </p>
-                                </TooltipContent>
-                              </Tooltip>
-                            </TooltipProvider>
-                          </div>
-                        </CardHeader>
-                        <CardContent className="pl-2">
-                          {userId && (
-                            <BigPieChart loading={productivityScore === 20} />
-                          )}
-                        </CardContent>
-                      </Card>
+                      <ExpandedDashBoardCard
+                        loading={loading}
+                        userId={userId}
+                      />
 
                       <div className="grid gap-4 grid-rows-2">
                         <DashBoardCard1
