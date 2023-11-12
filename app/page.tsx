@@ -26,6 +26,7 @@ import {
 import { InfoCircledIcon } from "@radix-ui/react-icons";
 import { TooltipArrow } from "@radix-ui/react-tooltip";
 import { BigPieChart } from "@/components/BigPieChart";
+import { AnalyticsTable } from "@/components/analyticstable";
 
 export default function Home() {
   const { isLoaded, userId } = useAuth();
@@ -66,7 +67,7 @@ export default function Home() {
                   Hello, {userId} your current active session is {sessionId}
                 </h2> */}
                   <div className="flex items-center space-x-2">
-                    <UserButton afterSignOutUrl="/delete-user-key " />
+                    <UserButton afterSignOutUrl="/" />
                   </div>
                 </div>
                 <Tabs defaultValue="overview" className="space-y-4">
@@ -146,7 +147,7 @@ export default function Home() {
                         </CardDescription>
                       </CardHeader>
                       <CardContent>
-                        {/* {userId && <AnalyticsTable userId={userId} />} */}
+                        {userId && <AnalyticsTable userId={userId} />}
                       </CardContent>
                     </Card>
                   </TabsContent>
