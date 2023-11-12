@@ -79,52 +79,56 @@ export const columns: ColumnDef<Payment>[] = [
   },
 
   {
-    accessorKey: "pagetitle",
+    accessorKey: "id",
     header: ({ column }) => {
       return (
         <Button
           variant="ghost"
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
         >
-          Title
+          ID
           <CaretSortIcon className="ml-2 h-4 w-4" />
         </Button>
       );
     },
     cell: ({ row }) => (
       <div className="lowercase w-[150px]  line-clamp-1">
-        {row.getValue("pagetitle")}
+        {row.getValue("id")}
       </div>
     ),
   },
 
   {
-    accessorKey: "allowed",
-    header: "Allowed",
+    accessorKey: "date",
+    header: "Date",
     cell: ({ row }) => (
-      <div className="capitalize  w-[50px]  line-clamp-1">
-        {row.getValue("allowed")}
+      <div className="capitalize  w-[100px]  line-clamp-1">
+        {row.getValue("date")}
       </div>
     ),
   },
   {
-    accessorKey: "pageurl",
-    header: "URL",
+    accessorKey: "Total Price",
+    header: "Total Price",
     cell: ({ row }) => (
-      <div className=" w-[150px]  line-clamp-1">{row.getValue("pageurl")}</div>
+      <div className=" w-[130px]  line-clamp-1">
+        {row.getValue("totalPrice")}
+      </div>
     ),
   },
   {
-    accessorKey: "category",
-    header: "Category",
+    accessorKey: "Total Calories",
+    header: "Total Calories",
     cell: ({ row }) => (
-      <div className="capitalize">{row.getValue("category")}</div>
+      <div className="capitalize">{row.getValue("totalCalories")}</div>
     ),
   },
   {
-    accessorKey: "date",
-    header: "Date",
-    cell: ({ row }) => <div className="capitalize">{row.getValue("date")}</div>,
+    accessorKey: "Suatainability Score",
+    header: "Suatainability Score",
+    cell: ({ row }) => (
+      <div className="capitalize">{row.getValue("sustainabilityScore")}</div>
+    ),
   },
   {
     id: "actions",
@@ -145,12 +149,10 @@ export const columns: ColumnDef<Payment>[] = [
             <DropdownMenuItem
               onClick={() => navigator.clipboard.writeText(payment.id)}
             >
-              {/* FIX THIS  */}
-              Delete
+              View Recipt
             </DropdownMenuItem>
-            {/* <DropdownMenuSeparator />
-            <DropdownMenuItem>View customer</DropdownMenuItem>
-            <DropdownMenuItem>View payment details</DropdownMenuItem> */}
+            <DropdownMenuSeparator />
+            <DropdownMenuItem>View Tab 2</DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
       );

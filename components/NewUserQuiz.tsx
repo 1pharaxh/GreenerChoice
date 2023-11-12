@@ -119,7 +119,7 @@ export default function NewUserQuiz({ email }: { email: string }) {
                   setWeight(parseInt(e.target.value));
                 }}
                 type="number"
-                placeholder="Dont be fat"
+                placeholder="Dont be shy"
               />
             </div>
 
