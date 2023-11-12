@@ -124,10 +124,8 @@ export default function Home() {
                 <Tabs defaultValue="overview" className="space-y-4">
                   <TabsList>
                     <TabsTrigger value="overview">Overview</TabsTrigger>
-                    <TabsTrigger value="analytics">Analytics</TabsTrigger>
-                    <TabsTrigger value="settings" disabled>
-                      Settings
-                    </TabsTrigger>
+                    <TabsTrigger value="recipes">Recipes</TabsTrigger>
+                    <TabsTrigger value="suggestions">Suggestions</TabsTrigger>
                   </TabsList>
                   <TabsContent value="overview" className="space-y-4">
                     <div className="grid gap-4 lg:grid-cols-2">
@@ -160,6 +158,14 @@ export default function Home() {
                         {userId && <AnalyticsTable userId={userId} />}
                       </CardContent>
                     </Card>
+                  </TabsContent>
+
+                  <TabsContent value="recipes">
+                    <RecipeChart />
+                    <div className="grid gap-4 lg:grid-cols-2">
+                      <RecipeTable />
+                      <Card></Card>
+                    </div>
                   </TabsContent>
                 </Tabs>
               </div>
