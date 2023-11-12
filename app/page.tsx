@@ -117,16 +117,7 @@ export default function Home() {
                   <TabsList>
                     <TabsTrigger value="overview">Overview</TabsTrigger>
                     <TabsTrigger value="recipes">Recipes</TabsTrigger>
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
                     <TabsTrigger value="suggestions">Suggestions</TabsTrigger>
-=======
-=======
->>>>>>> Stashed changes
-                    <TabsTrigger value="leaderboard">
-                    Leaderboard
-                    </TabsTrigger>
->>>>>>> Stashed changes
                   </TabsList>
                   <TabsContent value="overview" className="space-y-4">
                     <div className="grid gap-4 lg:grid-cols-2">
@@ -165,24 +156,8 @@ export default function Home() {
                     <RecipeChart />
                     <div className="grid gap-4 lg:grid-cols-2">
                       <RecipeTable />
-                      <Card></Card>
                     </div>
                   </TabsContent>
-<<<<<<< Updated upstream
-=======
-
-                  <TabsContent value="leaderboard">
-                  <Leaderboard />
-                  </TabsContent>
-
-<<<<<<< Updated upstream
->>>>>>> Stashed changes
-=======
-                  <TabsContent value="leaderboard">
-                  <Leaderboard />
-                  </TabsContent>
-
->>>>>>> Stashed changes
                 </Tabs>
               </div>
             </div>
