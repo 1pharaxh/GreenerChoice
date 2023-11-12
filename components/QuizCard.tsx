@@ -18,6 +18,7 @@ export default function QuizCard({ email }: { email: string }) {
   const [question, setQuestion] = React.useState("");
   const [selected, setSelected] = React.useState("");
   const [error, setError] = React.useState("");
+  const [optionsFail, setOptionsFail] = React.useState(true);
 
   const handleSubmit = (e: any) => {
     e.preventDefault();
@@ -48,6 +49,7 @@ export default function QuizCard({ email }: { email: string }) {
       setAns(data["Correct Option"]);
       setOptions(data["Options"]);
       console.log("GOT QUESSTION ", data);
+      setOptionsFail(false);
     } catch (error) {
       console.error("Fetch error:", error);
     }
@@ -74,16 +76,17 @@ export default function QuizCard({ email }: { email: string }) {
           </p>
         )}
         <div className="grid grid-cols-2 gap-6">
-          {options.map((elem: any, index: any) => (
-            <Button
-              key={index}
-              onClick={() => setSelected(elem)}
-              variant="outline"
-            >
-              <ShadowOuterIcon className="mr-2 h-4 w-4" />
-              {elem}
-            </Button>
-          ))}
+          {options &&
+            options.map((elem: any, index: any) => (
+              <Button
+                key={index}
+                onClick={() => setSelected(elem)}
+                variant="outline"
+              >
+                <ShadowOuterIcon className="mr-2 h-4 w-4" />
+                {elem}
+              </Button>
+            ))}
         </div>
         <div className="relative">
           <div className="absolute inset-0 flex items-center">
@@ -99,6 +102,12 @@ export default function QuizCard({ email }: { email: string }) {
         {error === "wrong" && (
           <p className="text-red-700 font-bold">
             😭😭Sorry you have the wrong answer, correct ans - {ans}
+          </p>
+        )}
+
+        {optionsFail && (
+          <p className="text-red-700 font-bold">
+            Open AI error, please try again later
           </p>
         )}
       </CardContent>
