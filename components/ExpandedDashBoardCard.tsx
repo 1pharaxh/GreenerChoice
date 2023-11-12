@@ -29,12 +29,12 @@ export default function ExpandedDashBoardCard({
       <CardHeader>
         <div className="flex flex-row items-center justify-between space-y-0 pb-2">
           <div>
-            {loading ? (
+            {!loading ? (
               <CardTitle>Expanded Productivity Score</CardTitle>
             ) : (
               <Skeleton className=" w-[150px] h-5 my-1" />
             )}
-            {loading ? (
+            {!loading ? (
               <CardDescription>
                 Learn more about your productivity score.
               </CardDescription>

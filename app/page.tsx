@@ -37,7 +37,7 @@ export default function Home() {
       if (user.primaryEmailAddress?.emailAddress) {
         setUserEmail(user.primaryEmailAddress.emailAddress);
       }
-      setLoading(false);
+      setLoading(true);
     }
   };
   useEffect(() => {
@@ -77,98 +77,92 @@ export default function Home() {
   };
   return (
     <>
-      {!loading && (
-        <main className="flex min-h-screen w-full flex-col items-center justify-between ">
-          <NewUserQuiz email={userEmail} />
+      <main className="flex min-h-screen w-full flex-col items-center justify-between ">
+        <NewUserQuiz email={userEmail} />
 
-          <>
-            <div className=" flex-col flex w-full max-w-7xl">
-              <div className="flex-1 space-y-4 p-8 pt-6">
-                <div className="flex items-center justify-between space-y-2">
-                  <h2 className="text-3xl font-bold tracking-tight">
-                    Dashboard
-                    <br />
-                    <span className="text-sm font-medium">
-                      Hello, {user?.firstName} welcome to Greener Choice
-                    </span>
-                  </h2>
-                  <div className="flex items-end space-y-2 flex-col ">
-                    <UserButton afterSignOutUrl="/" />
+        <>
+          <div className=" flex-col flex w-full max-w-7xl">
+            <div className="flex-1 space-y-4 p-8 pt-6">
+              <div className="flex items-center justify-between space-y-2">
+                <h2 className="text-3xl font-bold tracking-tight">
+                  Dashboard
+                  <br />
+                  <span className="text-sm font-medium">
+                    Hello, {user?.firstName} welcome to Greener Choice
+                  </span>
+                </h2>
+                <div className="flex items-end space-y-2 flex-col ">
+                  <UserButton afterSignOutUrl="/" />
 
-                    <CldUploadButton
-                      className="file-input hidden"
-                      options={{
-                        clientAllowedFormats: ["png", "gif", "jpeg", "jpg"],
-                      }}
-                      onSuccess={cloudinaryToBackend}
-                      uploadPreset="ml_default"
-                    />
+                  <CldUploadButton
+                    className="file-input hidden"
+                    options={{
+                      clientAllowedFormats: ["png", "gif", "jpeg", "jpg"],
+                    }}
+                    onSuccess={cloudinaryToBackend}
+                    uploadPreset="ml_default"
+                  />
 
-                    <Button
-                      onClick={handleUploadButtonClick}
-                      variant={"notification"}
-                      className="flex items-center justify-center gap-1"
-                    >
-                      Upload
-                      <PlusIcon className="h-5 w-5 text-green-600" />
-                    </Button>
-                  </div>
+                  <Button
+                    onClick={handleUploadButtonClick}
+                    variant={"notification"}
+                    className="flex items-center justify-center gap-1"
+                  >
+                    Upload
+                    <PlusIcon className="h-5 w-5 text-green-600" />
+                  </Button>
                 </div>
-                <Tabs defaultValue="overview" className="space-y-4">
-                  <TabsList>
-                    <TabsTrigger value="overview">Overview</TabsTrigger>
-                    <TabsTrigger value="recipes">Recipes</TabsTrigger>
-                    <TabsTrigger value="leaderboard">Leaderboard</TabsTrigger>
-                  </TabsList>
-                  <TabsContent value="overview" className="space-y-4">
-                    <div className="grid gap-4 lg:grid-cols-2">
-                      <ExpandedDashBoardCard
-                        loading={loading}
+              </div>
+              <Tabs defaultValue="overview" className="space-y-4">
+                <TabsList>
+                  <TabsTrigger value="overview">Overview</TabsTrigger>
+                  <TabsTrigger value="recipes">Recipes</TabsTrigger>
+                  <TabsTrigger value="leaderboard">Leaderboard</TabsTrigger>
+                </TabsList>
+                <TabsContent value="overview" className="space-y-4">
+                  <div className="grid gap-4 lg:grid-cols-2">
+                    <ExpandedDashBoardCard loading={loading} userId={userId} />
+
+                    <div className="grid gap-4 grid-rows-2">
+                      <DashBoardCard1
+                        className="row-span-3"
+                        productivityScore={productivityScore}
                         userId={userId}
                       />
-
-                      <div className="grid gap-4 grid-rows-2">
-                        <DashBoardCard1
-                          className="row-span-3"
-                          productivityScore={productivityScore}
-                          userId={userId}
-                        />
-                        <DashBoardCard2
-                          className="row-span-1"
-                          productivityScore={productivityScore}
-                        />
-                      </div>
+                      <DashBoardCard2
+                        className="row-span-1"
+                        productivityScore={productivityScore}
+                      />
                     </div>
+                  </div>
 
-                    <Card>
-                      <CardHeader>
-                        <CardTitle>History</CardTitle>
-                        <CardDescription>
-                          See more browser history details.
-                        </CardDescription>
-                      </CardHeader>
-                      <CardContent>
-                        {userId && <AnalyticsTable userId={userId} />}
-                      </CardContent>
-                    </Card>
-                  </TabsContent>
+                  <Card>
+                    <CardHeader>
+                      <CardTitle>History</CardTitle>
+                      <CardDescription>
+                        See more browser history details.
+                      </CardDescription>
+                    </CardHeader>
+                    <CardContent>
+                      {userId && <AnalyticsTable userId={userId} />}
+                    </CardContent>
+                  </Card>
+                </TabsContent>
 
-                  <TabsContent value="recipes">
-                    <RecipeChart />
-                    <div className="grid gap-4 lg:grid-cols-2">
-                      <RecipeTable />
-                    </div>
-                  </TabsContent>
+                <TabsContent value="recipes">
+                  <div className="grid gap-4 lg:grid-cols-2">
+                    <RecipeTable />
+                  </div>
+                </TabsContent>
 
-                  <TabsContent value="leaderboard">
-                    <Leaderboard />
-                  </TabsContent>
-                </Tabs>
-              </div>
+                <TabsContent value="leaderboard">
+                  <Leaderboard />
+                </TabsContent>
+              </Tabs>
             </div>
-          </>
-        </main>
-      )}
+          </div>
+        </>
+      </main>
     </>
   );
 }

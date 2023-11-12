@@ -28,32 +28,40 @@ export function BigPieChart({ loading }: { loading: boolean }) {
   }, [typeof window !== "undefined" ? window.innerWidth : undefined]);
   return (
     <>
-      <ResponsiveContainer width="100%" height={350}>
-        <PieChart>
-          <Pie
-            data={data}
-            innerRadius={90}
-            outerRadius={120}
-            fill="#8884d8"
-            paddingAngle={2}
-            dataKey="value"
-            label={
-              onMobile
-                ? false
-                : ({ name, percent }) =>
-                    `${name} ${(percent * 100).toFixed(0)}%`
-            }
-          >
-            {data.map((entry, index) => (
-              <Cell
-                key={`cell-${index}`}
-                fill={COLORS[index % COLORS.length]}
-              />
-            ))}
-          </Pie>
-          {onMobile && <Legend />}
-        </PieChart>
-      </ResponsiveContainer>
+      {!loading && (
+        <ResponsiveContainer width="100%" height={350}>
+          <PieChart>
+            <Pie
+              data={data}
+              innerRadius={90}
+              outerRadius={120}
+              fill="#8884d8"
+              paddingAngle={2}
+              dataKey="value"
+              label={
+                onMobile
+                  ? false
+                  : ({ name, percent }) =>
+                      `${name} ${(percent * 100).toFixed(0)}%`
+              }
+            >
+              {data.map((entry, index) => (
+                <Cell
+                  key={`cell-${index}`}
+                  fill={COLORS[index % COLORS.length]}
+                />
+              ))}
+            </Pie>
+            {onMobile && <Legend />}
+          </PieChart>
+        </ResponsiveContainer>
+      )}
+
+      {loading && (
+        <div className="h-[350px] w-full flex items-center justify-center">
+          <div className="animate-spin rounded-full h-32 w-32 border-t-5 border-b-2 border-green-600"></div>
+        </div>
+      )}
     </>
   );
 }
