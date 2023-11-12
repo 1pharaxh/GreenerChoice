@@ -181,15 +181,12 @@ export function AnalyticsTable({ userEmail }: { userEmail?: string }) {
         "https://greenerchoicebackend-0edf19fb0f9e.herokuapp.com/api/receipt/receipts_table_view";
       try {
         // ${api}/?email=${userEmail}
-        const res = await fetch(
-          `https://greenerchoicebackend-0edf19fb0f9e.herokuapp.com/api/receipt/receipts_table_view/?email=fardeenfaisal.fs@gmail.com`,
-          {
-            method: "GET",
-            headers: {
-              "Content-Type": "application/json",
-            },
-          }
-        );
+        const res = await fetch(`${api}/?email=${userEmail}`, {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        });
         if (!res.ok) {
           throw new Error(`HTTP error! status: ${res.status}`);
         }
