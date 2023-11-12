@@ -36,7 +36,7 @@ export default function Home() {
   const [SustainablityScore, setSustainablityScore] = useState(0);
   const [receiptTabId, setReceiptTabId] = useState("");
 
-  const [tabsValue, setTabsValue] = useState("overview");
+  const [tabsValue, setTabsValue] = useState("receipts");
 
   const fetchNotifications = async (email: string) => {
     const api = `https://greenerchoicebackend-0edf19fb0f9e.herokuapp.com/api/user/user_notifications/?email=${email}`;
@@ -266,7 +266,10 @@ export default function Home() {
                   </TabsContent>
 
                   <TabsContent value="receipts">
-                    <ReceipTable receiptTabId={receiptTabId} />
+                    <ReceipTable
+                      userEmail={userEmail}
+                      receiptTabId={receiptTabId}
+                    />
                   </TabsContent>
                 </Tabs>
               </div>

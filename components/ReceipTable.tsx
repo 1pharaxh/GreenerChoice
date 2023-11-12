@@ -1,5 +1,5 @@
 "use client";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import {
   Table,
@@ -23,102 +23,206 @@ interface Receipts {
   procedure: string[];
 }
 
-export function ReceipTable({ receiptTabId }: { receiptTabId: string }) {
-  const [selectedReceipt, setSelectedReceipt] = useState<Receipts | null>(null);
+const recipes: Receipts[] = [
+  {
+    name: "Receipt 1",
+    ingredients: ["Ingredient 1", "Ingredient 2", "Ingredient 3"],
+    procedure: ["Step 1", "Step 2", "Step 3", "Step 4", "Step 5"],
+  },
+  {
+    name: "Receipt 2",
+    ingredients: ["Ingredient 1", "Ingredient 2", "Ingredient 3"],
+    procedure: ["Step 1", "Step 2", "Step 3"],
+  },
+  {
+    name: "Receipt 3",
+    ingredients: ["Ingredient 1", "Ingredient 2", "Ingredient 3"],
+    procedure: ["Step 1", "Step 2", "Step 3"],
+  },
+  {
+    name: "Receipt 4",
+    ingredients: ["Ingredient 1", "Ingredient 2", "Ingredient 3"],
+    procedure: ["Step 1", "Step 2", "Step 3"],
+  },
+  {
+    name: "Receipt 5",
+    ingredients: ["Ingredient 1", "Ingredient 2", "Ingredient 3"],
+    procedure: ["Step 1", "Step 2", "Step 3"],
+  },
+];
 
-  const recipes: Receipts[] = [
-    {
-      name: "Receipt 1",
-      ingredients: ["Ingredient 1", "Ingredient 2", "Ingredient 3"],
-      procedure: ["Step 1", "Step 2", "Step 3", "Step 4", "Step 5"],
-    },
-    {
-      name: "Receipt 2",
-      ingredients: ["Ingredient 1", "Ingredient 2", "Ingredient 3"],
-      procedure: ["Step 1", "Step 2", "Step 3"],
-    },
-    {
-      name: "Receipt 3",
-      ingredients: ["Ingredient 1", "Ingredient 2", "Ingredient 3"],
-      procedure: ["Step 1", "Step 2", "Step 3"],
-    },
-    {
-      name: "Receipt 4",
-      ingredients: ["Ingredient 1", "Ingredient 2", "Ingredient 3"],
-      procedure: ["Step 1", "Step 2", "Step 3"],
-    },
-    {
-      name: "Receipt 5",
-      ingredients: ["Ingredient 1", "Ingredient 2", "Ingredient 3"],
-      procedure: ["Step 1", "Step 2", "Step 3"],
-    },
-  ];
+export function ReceipTable({
+  receiptTabId,
+  userEmail,
+}: {
+  receiptTabId: string;
+  userEmail: string;
+}) {
+  const [selectedReceipt, setSelectedReceipt] = useState([]);
 
-  const handleTableRowClick = (receipt: Receipts) => {
-    setSelectedReceipt(receipt);
+  const [dataTableIds, setdataTableIds] = useState<any>([]);
+  const [receiptName, setreceiptName] = useState([]);
+
+  const [suggestions, setSuggestions] = useState([]);
+
+  const fetchRowData = async (id: string) => {
+    const api = `https://greenerchoicebackend-0edf19fb0f9e.herokuapp.com/api/receipt-records/?receipt_id=${id}`;
+    try {
+      const res = await fetch(api, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+      if (!res.ok) {
+        throw new Error(`HTTP error! status: ${res.status}`);
+      }
+      const data = await res.json();
+      if (data) {
+        let items: any = [];
+        data.map((elem: any) => {
+          items.push(elem.item_name);
+        });
+        setSelectedReceipt(items);
+        console.log("GOT ROW DATA", items);
+
+        let suggestions: any = [];
+        data.map((elem: any) => {
+          if (elem.suggestion !== "None") {
+            suggestions.push(elem.suggestion);
+          }
+        });
+        console.log("SUGGESTIONS", suggestions);
+        setSuggestions(suggestions);
+      }
+    } catch (error) {
+      console.error("Fetch error:", error);
+    }
   };
 
+  const fetchTableData = async () => {
+    const api =
+      "https://greenerchoicebackend-0edf19fb0f9e.herokuapp.com/api/receipt/receipts_table_view";
+    try {
+      // ${api}/?email=${userEmail}
+      const res = await fetch(`${api}/?email=${userEmail}`, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+      if (!res.ok) {
+        throw new Error(`HTTP error! status: ${res.status}`);
+      }
+      const data = await res.json();
+      if (data) {
+        const tableData = Object.keys(data).map((id) => {
+          return id;
+        });
+        console.log("GOT TABLE IDS", tableData);
+
+        setdataTableIds(tableData);
+      }
+    } catch (error) {
+      console.error("Fetch error:", error);
+    }
+  };
+  useEffect(() => {
+    fetchTableData();
+  }, [userEmail]);
   return (
     <div>
-      <div className="flex w-full space-x-4">
-        <Card className="w-full">
+      <div
+        className="
+      
+      grid
+      grid-cols-4
+      w-full space-x-4"
+      >
+        <Card
+          className="
+        col-span-1
+        "
+        >
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
             <CardTitle className="text-sm font-medium">All Receipts</CardTitle>
             <CrumpledPaperIcon className="h-4 w-4 text-muted-foreground" />
           </CardHeader>
           <CardContent className="w-full">
-            <Table>
-              <TableCaption className="">A list of your receipts.</TableCaption>
-              <ScrollArea className="h-48">
+            <ScrollArea className="h-80">
+              <Table>
+                <TableCaption className="">
+                  A list of your receipts.
+                </TableCaption>
                 <TableBody className="">
-                  {recipes.map((recipe) => (
+                  {dataTableIds.map((elem: any) => (
                     <TableRow
                       className=" cursor-pointer"
-                      key={recipe.name}
-                      onClick={() => handleTableRowClick(recipe)}
+                      key={elem}
+                      onClick={() => {
+                        fetchRowData(elem);
+                        setreceiptName(elem);
+                      }}
                     >
                       <TableCell className="font-medium">
-                        {recipe.name}
+                        Receipt - {elem}
                       </TableCell>
                     </TableRow>
                   ))}
                 </TableBody>
-              </ScrollArea>
-            </Table>
+              </Table>
+            </ScrollArea>
           </CardContent>
         </Card>
 
-        {selectedReceipt ? (
-          <Card className="w-full">
+        {selectedReceipt.length > 0 && (
+          <Card className="col-span-3">
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
               <CardTitle className="text-sm font-medium">
-                {selectedReceipt.name}
+                Receipt - {receiptName}
               </CardTitle>
               <PaperPlaneIcon className="h-4 w-4 text-muted-foreground" />
             </CardHeader>
             <CardContent>
-              <ScrollArea className="h-48">
-                <h6 className="text-md font-bold">
-                  <b>All Purchases: </b>
-                </h6>
-                <ul>
-                  {selectedReceipt.ingredients.map((ingredient, index) => (
-                    <li key={index}>{ingredient}</li>
-                  ))}
-                </ul>
+              <ScrollArea className="h-80">
                 <h6 className="text-md font-bold mt-[10px]">
                   <b>From your personal 🤖 trainer: </b>
                 </h6>
                 <ul>
-                  {selectedReceipt.procedure.map((procedure, index) => (
-                    <li key={index}>{procedure}</li>
+                  {suggestions.map((elem: any, index: any) => (
+                    <li
+                      className="
+                    my-[5px]
+                    "
+                      key={index}
+                    >
+                      -{elem}
+                    </li>
+                  ))}
+                </ul>
+
+                <h6 className="text-md font-bold">
+                  <b>All Purchases: </b>
+                </h6>
+                <ul>
+                  {selectedReceipt.map((elem: any, index: any) => (
+                    <li
+                      className="
+                    my-[5px]
+                    "
+                      key={index}
+                    >
+                      -{elem}
+                    </li>
                   ))}
                 </ul>
               </ScrollArea>
             </CardContent>
           </Card>
-        ) : (
-          <Card className="w-full">
+        )}
+
+        {selectedReceipt.length === 0 && (
+          <Card className="col-span-3">
             <div style={{ marginLeft: "30px" }}>
               <Skeleton
                 className="h-5 w-[150px]"
