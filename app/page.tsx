@@ -34,6 +34,22 @@ export default function Home() {
   const [linechartData, setlineChartData] = useState([]);
   const [SustainablityScore, setSustainablityScore] = useState(0);
 
+  const fetchNotifications = async (email: string) => {
+    const api = `https://greenerchoicebackend-0edf19fb0f9e.herokuapp.com/api/user/user_notifications/?email=${email}`;
+    try {
+      const response = await fetch(api, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+      const data = await response.json();
+      console.log("fetchNotifications_function", data);
+    } catch (error) {
+      console.log("fetchNotifications_function", error);
+    }
+  };
+
   const fetchLineChartData = async (email: string) => {
     const api = `https://greenerchoicebackend-0edf19fb0f9e.herokuapp.com/api/user/user_sustainability_ratio_by_day/?email=${email}`;
     try {
@@ -100,6 +116,7 @@ export default function Home() {
         setUserEmail(user.primaryEmailAddress.emailAddress);
         fetchPieChartData(user.primaryEmailAddress.emailAddress);
         fetchLineChartData(user.primaryEmailAddress.emailAddress);
+        fetchNotifications(user.primaryEmailAddress.emailAddress);
       }
 
       setLoading(false);

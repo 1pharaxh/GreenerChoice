@@ -32,13 +32,13 @@ export default function ExpandedDashBoardCard({
         <div className="flex flex-row items-center justify-between space-y-0 pb-2">
           <div>
             {!loading ? (
-              <CardTitle>Expanded Productivity Score</CardTitle>
+              <CardTitle>Eco-Friendly Purchases</CardTitle>
             ) : (
               <Skeleton className=" w-[150px] h-5 my-1" />
             )}
             {!loading ? (
               <CardDescription>
-                Learn more about your productivity score.
+                See the propertion of your purchases considered sustainable.
               </CardDescription>
             ) : (
               <Skeleton className=" w-[130px] h-[0.9rem] my-1" />
@@ -56,8 +56,8 @@ export default function ExpandedDashBoardCard({
               >
                 <TooltipArrow />
                 <p className="text-sm font-medium">
-                  This chart shows your productivity score every week with more
-                  data.
+                  This chart shows the percent of all purchases you have made
+                  that are considered to be sustainable and eco-friendly.
                 </p>
               </TooltipContent>
             </Tooltip>
