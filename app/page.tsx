@@ -105,7 +105,7 @@ export default function Home() {
   return (
     <>
       <main className="flex min-h-screen w-full flex-col items-center justify-between ">
-        <NewUserQuiz email={userEmail} />
+        {userEmail && <NewUserQuiz email={userEmail} />}
 
         <>
           <div className=" flex-col flex w-full max-w-7xl">
